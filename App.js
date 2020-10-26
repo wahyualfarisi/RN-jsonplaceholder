@@ -10,12 +10,20 @@ import PostsScreen from './screens/PostsScreen';
 import UsersScreen from './screens/UsersScreen';
 import UserPostScreen from './screens/UsersPostScreen';
 import PhotosScreen from './screens/PhotosScreen';
+import CommetScreen from './screens/CommetScreen';
 
 const PostStack = createStackNavigator();
 function PostStackScreen(){
   return (
     <PostStack.Navigator>
         <PostStack.Screen name="Posts" component={PostsScreen} />
+        <PostStack.Screen 
+          name="Comments" 
+          component={CommetScreen} 
+          options={ ({route}) => ({
+            title: 'Comments: '+ route.params.postId 
+          })}
+        />
     </PostStack.Navigator>
   )
 }

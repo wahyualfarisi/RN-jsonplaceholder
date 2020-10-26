@@ -1,11 +1,12 @@
 import React, { useEffect, useReducer } from 'react'
-import { StyleSheet, Text, View, ActivityIndicator, FlatList } from 'react-native';
+import { StyleSheet, Button, Text, View, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
 import { actionCreators, initialState, postReducers } from './../store/postReducer';
 
 
 
 
-const PostsScreen = () => {
+const PostsScreen = ({ navigation }) => {
+    
 
     const [state, disptach] = useReducer(postReducers, initialState);
 
@@ -48,17 +49,24 @@ const PostsScreen = () => {
         )
     }
 
-
-
     return (
         <FlatList 
             style={styles.container}
-            keyExtractor={(post) => post.id}
+            keyExtractor={(post) => post.id.toString()}
             data={posts}
             renderItem={ ( { item, index } ) => (
                 <View key={item.id} style={styles.post}>
                     <Text style={styles.title}> {index}. {item.title} </Text>
                     <Text> {item.body.slice(0, 20)} ... </Text>
+                    <TouchableOpacity 
+                        style={{ alignSelf: 'flex-end', padding: 2 }}  
+                        onPress={
+                            () => navigation.navigate('Comments', {
+                                postId: item.id
+                            })
+                        }>
+                        <Text style={{ color: 'tomato' }}>See Comment</Text>
+                    </TouchableOpacity>
                 </View>
             )}
 
