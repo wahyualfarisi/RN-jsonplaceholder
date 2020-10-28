@@ -21,7 +21,7 @@ function PostStackScreen(){
           name="Comments" 
           component={CommetScreen} 
           options={ ({route}) => ({
-            title: 'Comments: '+ route.params.postId 
+            title: 'Comments: '+ route.params.Post 
           })}
         />
     </PostStack.Navigator>
@@ -34,7 +34,13 @@ function UsersStackScreen(){
   return (
     <UsersStack.Navigator>
       <UsersStack.Screen name="Users" component={UsersScreen} />
-      <UsersStack.Screen name="UserPost" component={UserPostScreen} />
+      <UsersStack.Screen 
+        name="UserPost" 
+        component={UserPostScreen} 
+        options={ ({route}) => ({
+          title: `${route.params.name}`
+        })}
+      />
     </UsersStack.Navigator>
   )
 }

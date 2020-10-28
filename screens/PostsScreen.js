@@ -6,7 +6,6 @@ import { actionCreators, initialState, postReducers } from './../store/postReduc
 
 
 const PostsScreen = ({ navigation }) => {
-    
 
     const [state, disptach] = useReducer(postReducers, initialState);
 
@@ -20,7 +19,7 @@ const PostsScreen = ({ navigation }) => {
     
                 const data = await res.json();
                 
-                disptach( actionCreators.success(data) );
+                disptach( actionCreators.success( data.slice(0,20) )  );
 
             }catch(err){
                 disptach( actionCreators.failure() )
@@ -57,12 +56,13 @@ const PostsScreen = ({ navigation }) => {
             renderItem={ ( { item, index } ) => (
                 <View key={item.id} style={styles.post}>
                     <Text style={styles.title}> {index}. {item.title} </Text>
-                    <Text> {item.body.slice(0, 20)} ... </Text>
+                    <Text> {item.body} ... </Text>
                     <TouchableOpacity 
                         style={{ alignSelf: 'flex-end', padding: 2 }}  
                         onPress={
                             () => navigation.navigate('Comments', {
-                                postId: item.id
+                                postId: item.id,
+                                Post: item.title
                             })
                         }>
                         <Text style={{ color: 'tomato' }}>See Comment</Text>
@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
         borderBottomColor: '#ccc',
         paddingVertical: 20,
         paddingRight: 20,
-        marginLeft: 20
+        paddingLeft: 20,
+        backgroundColor: '#fff'
     },
     title: {
         fontSize: 14,
